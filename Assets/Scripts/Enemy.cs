@@ -5,8 +5,9 @@ using TMPro;
 
 public class Enemy : MonoBehaviour
 {
-    public Vector2 dropSpeedMinMax;
     public string text;
+    public int scoreOnKill = 20;
+    public Vector2 dropSpeedMinMax;
 
     private float randomSpeed;
 

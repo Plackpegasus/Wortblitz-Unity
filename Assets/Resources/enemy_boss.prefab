@@ -162,8 +162,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72bab5e1c00c03b48a530390e5dd732d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropSpeedMinMax: {x: 0.2, y: 0.5}
   text: 
+  scoreOnKill: 50
+  dropSpeedMinMax: {x: 0.2, y: 0.5}
 --- !u!1 &4592726835302099224
 GameObject:
   m_ObjectHideFlags: 0
