@@ -1,12 +1,26 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
-public class Despawn : MonoBehaviour
+public class Despawn : MonoBehaviour, IObservable<int>
 {
     public TMP_InputField inputField;
+
+    private List<IObserver<int>> observers = new List<IObserver<int>>();
+
+    public IDisposable Subscribe(IObserver<int> observer)
+    {
+        if (!observers.Contains(observer))
+        {
+            observers.Add(observer);
+        }
+
+        return null;
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +31,15 @@ public class Despawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    private void ReturnScoreToObservers(int score)
+    {
+        foreach (var observer in observers)
+        {
+            observer.OnNext(score);
+        }
     }
 
     public void TextInput()
@@ -26,7 +48,7 @@ public class Despawn : MonoBehaviour
         string input = inputField.text;
 
         foreach (Enemy enemy in enemies)
-         {
+        {
             string text = enemy.GetComponentInChildren<TextMeshPro>().text.Trim();
 
             if (input.Equals(text))
@@ -34,6 +56,7 @@ public class Despawn : MonoBehaviour
                 inputField.text = "";
                 inputField.Select();
 
+                ReturnScoreToObservers(enemy.scoreOnKill);
                 Destroy(enemy.gameObject);
                 return;
             }
