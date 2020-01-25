@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class Spawn : MonoBehaviour
 {
@@ -11,41 +9,57 @@ public class Spawn : MonoBehaviour
     [Header("Enemy difficulty")]
     public Vector2 wordLengthEasyMedium;
 
+    private int score;
     private int camWidth;
     private bool spawning = false;
+    private bool bossSpawned = false;
+    private Wordlist wordlist;
+    private Score scoreScript;
+    private GameObject gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
         camWidth = Camera.main.pixelWidth;
+        gameManager = GameObject.Find("Game Manager");
+        wordlist = gameManager.GetComponent<Wordlist>();
+        scoreScript = gameManager.GetComponent<Score>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        score = scoreScript.playerScore;
+
         if (!spawning)
         {
-            GameObject gameManager = GameObject.Find("Game Manager");
-            Wordlist wordlist = gameManager.GetComponent<Wordlist>();
-
             int index = Random.Range(0, wordlist.wordlist.Count);
             string word = wordlist.wordlist[index];
 
-            if (word.Length < wordLengthEasyMedium.x)
+            if (!bossSpawned && score > scoreScript.scoreToBoss)
             {
-                SpawnEnemy("easy", word);
-            }
-            else if (word.Length <= wordLengthEasyMedium.y)
-            {
-                SpawnEnemy("medium", word);
-            }
-            else if (word.Length > wordLengthEasyMedium.y)
-            {
-                SpawnEnemy("hard", word);
+                Debug.LogWarning("Boss spawned");
+                SpawnEnemy("boss", word);
+                bossSpawned = true;
             }
             else
             {
-                // some error or something idk
+                if (word.Length < wordLengthEasyMedium.x)
+                {
+                    SpawnEnemy("easy", word);
+                }
+                else if (word.Length <= wordLengthEasyMedium.y)
+                {
+                    SpawnEnemy("medium", word);
+                }
+                else if (word.Length > wordLengthEasyMedium.y)
+                {
+                    SpawnEnemy("hard", word);
+                }
+                else
+                {
+                    Debug.LogError("couldn't spawn enemy with word " + word);
+                }
             }
 
             wordlist.wordlist.Remove(word);

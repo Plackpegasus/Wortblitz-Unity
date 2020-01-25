@@ -33,13 +33,13 @@ public class Score : MonoBehaviour , IObserver<int>
 
     public void OnError(Exception error)
     {
-        // don't know yet
+        Debug.LogError(error.Message);
     }
 
     public void OnNext(int value)
     {
         playerScore += value;
-        Debug.Log("player gained " + value + "; current score: " + playerScore);
+        Debug.Log("player gained: " + value + "; current score: " + playerScore);
     }
 
 
@@ -52,7 +52,6 @@ public class Score : MonoBehaviour , IObserver<int>
     // Update is called once per frame
     void Update()
     {
-        text.text = "";
         text.text = playerScore.ToString();
     }
 }
