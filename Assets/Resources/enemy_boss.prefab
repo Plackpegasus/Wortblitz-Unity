@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4592726835232004207}
   - component: {fileID: 4592726835232004200}
   - component: {fileID: 4592726835232004201}
+  - component: {fileID: 6421074789399895718}
   m_Layer: 0
   m_Name: enemy_boss
   m_TagString: Untagged
@@ -165,6 +166,18 @@ MonoBehaviour:
   text: 
   scoreOnKill: 50
   dropSpeedMinMax: {x: 0.2, y: 0.5}
+--- !u!114 &6421074789399895718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4592726835232004213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 139a297fd624d4546b4b683d70122eb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4592726835302099224
 GameObject:
   m_ObjectHideFlags: 0
