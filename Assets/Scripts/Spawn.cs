@@ -15,13 +15,12 @@ public class Spawn : MonoBehaviour
     private bool bossSpawned = false;
     private Wordlist wordlist;
     private Score scoreScript;
-    private GameObject gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
         camWidth = Camera.main.pixelWidth;
-        gameManager = GameObject.Find("Game Manager");
+        GameObject gameManager = GameObject.Find("Game Manager");
         wordlist = gameManager.GetComponent<Wordlist>();
         scoreScript = gameManager.GetComponent<Score>();
     }

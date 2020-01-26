@@ -4,8 +4,6 @@ using TMPro;
 
 public class Boss : MonoBehaviour, IObserver<int>
 {
-    public Despawn despawnScript;
-
     private string text;
     private string hiddenText;
     private TextMeshPro tmProGUI;
@@ -34,19 +32,29 @@ public class Boss : MonoBehaviour, IObserver<int>
 
     public void OnNext(int value)
     {
-        
+        int i = hiddenText.IndexOf('*');
+
+        if (value != -1 && i >= 0)
+        {
+            char[] c = hiddenText.ToCharArray();
+            char[] t = text.ToCharArray();
+            c[i] = t[i];
+            hiddenText = c.ArrayToString();
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        GameObject gameManager = GameObject.Find("Game Manager");
+        Despawn despawnScript = gameManager.GetComponent<Despawn>();
+
         tmProGUI = GetComponentInChildren<TextMeshPro>();
-        Debug.Log(tmProGUI);
         text = tmProGUI.text;
 
         foreach (var _ in text)
         {
-            hiddenText += "X";
+            hiddenText += "*";
         }
 
         tmProGUI.text = hiddenText;
@@ -56,6 +64,6 @@ public class Boss : MonoBehaviour, IObserver<int>
     // Update is called once per frame
     void Update()
     {
-
+        tmProGUI.text = hiddenText;
     }
 }

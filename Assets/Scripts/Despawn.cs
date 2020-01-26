@@ -57,8 +57,8 @@ public class Despawn : MonoBehaviour, IObservable<int>
 
                 if (newInput.Equals(text))
                 {
-                    ReturnScoreToObservers(enemy.scoreOnKill);
                     Destroy(enemy.gameObject);
+                    ReturnScoreToObservers(enemy.scoreOnKill);
                     Clear();
                     return;
                 }

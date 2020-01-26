@@ -1103,8 +1103,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerScore: 0
   faultScore: 0
-  scoreToBoss: 50
-  despawn: {fileID: 1330226827}
+  scoreToBoss: 0
+  despawnScript: {fileID: 1330226827}
   text: {fileID: 14789458}
 --- !u!1 &1453276393
 GameObject:
