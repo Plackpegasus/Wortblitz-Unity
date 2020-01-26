@@ -72,7 +72,7 @@ public class Spawn : MonoBehaviour
         var enemy = Instantiate(Resources.Load("enemy_" + enemyType) as GameObject);
 
         enemy.GetComponent<Enemy>().text = word;
-        enemy.transform.position = new Vector2(spawnpoint, 6);
+        enemy.transform.position = (enemyType != "boss") ? new Vector2(spawnpoint, 6) : new Vector2(0, 6);
 
         Debug.Log("type: " + enemyType + "\n\tspawnpoint: " + spawnpoint);
         StartCoroutine(WaitSpawn());
