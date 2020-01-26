@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -9,6 +8,8 @@ public class Despawn : MonoBehaviour, IObservable<int>
 {
     public TMP_InputField inputField;
 
+    private string newInput;
+    private string lastInput;
     private List<IObserver<int>> observers = new List<IObserver<int>>();
 
     public IDisposable Subscribe(IObserver<int> observer)
@@ -26,6 +27,7 @@ public class Despawn : MonoBehaviour, IObservable<int>
     void Start()
     {
         inputField.Select();
+        lastInput = "";
     }
 
     // Update is called once per frame
@@ -42,24 +44,39 @@ public class Despawn : MonoBehaviour, IObservable<int>
         }
     }
 
-    public void TextInput()
+    public void TextInputChange()
     {
         List<Enemy> enemies = FindObjectsOfType<Enemy>().ToList();
-        string input = inputField.text;
+        newInput = inputField.text;
 
-        foreach (Enemy enemy in enemies)
+        if (newInput.Length >= lastInput.Length)
         {
-            string text = enemy.GetComponentInChildren<TextMeshPro>().text.Trim();
-
-            if (input.Equals(text))
+            foreach (Enemy enemy in enemies)
             {
-                inputField.text = "";
-                inputField.Select();
+                string text = enemy.GetComponentInChildren<TextMeshPro>().text.Trim();
 
-                ReturnScoreToObservers(enemy.scoreOnKill);
-                Destroy(enemy.gameObject);
-                return;
+                if (newInput.Equals(text))
+                {
+                    ReturnScoreToObservers(enemy.scoreOnKill);
+                    Destroy(enemy.gameObject);
+                    Clear();
+                    return;
+                }
             }
         }
+        else
+        {
+            ReturnScoreToObservers(-1);
+        }
+
+        lastInput = newInput;
+    }
+
+    private void Clear()
+    {
+        newInput = "";
+        lastInput = "";
+        inputField.text = "";
+        inputField.Select();
     }
 }
