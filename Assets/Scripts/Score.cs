@@ -9,7 +9,7 @@ public class Score : MonoBehaviour , IObserver<int>
     public int playerScore = 0;
     public int faultScore = 0;
     public int scoreToBoss = 200;
-    public Despawn despawn;
+    public Despawn despawnScript;
     public TextMeshProUGUI text;
 
     private IDisposable unsubscribe;
@@ -46,7 +46,7 @@ public class Score : MonoBehaviour , IObserver<int>
     // Start is called before the first frame update
     void Start()
     {
-        Subscribe(despawn);
+        Subscribe(despawnScript);
     }
 
     // Update is called once per frame
