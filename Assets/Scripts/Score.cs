@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Score : MonoBehaviour, IObserver<int>
+public class Score : MonoBehaviour , IObserver<int>
 {
     public int playerScore = 0;
     public int faultScore = 0;
@@ -10,26 +12,28 @@ public class Score : MonoBehaviour, IObserver<int>
     public Despawn despawn;
     public TextMeshProUGUI text;
 
-    private IDisposable disposable;
+    private IDisposable unsubscribe;
+    // private bool firstTime = true;
+    // private int lastValue;
 
-    public virtual void Subscribe(IObservable<int> observable)
+    public virtual void Subscribe(IObservable<int> provider)
     {
-        disposable = observable.Subscribe(this);
+        unsubscribe = provider.Subscribe(this);
     }
 
     public virtual void Unsubscribe()
     {
-        disposable.Dispose();
+        unsubscribe.Dispose();
     }
 
     public void OnCompleted()
     {
-        throw new NotImplementedException();
+        // don't know yet
     }
 
     public void OnError(Exception error)
     {
-        throw new NotImplementedException();
+        Debug.LogError(error.Message);
     }
 
     public void OnNext(int value)
