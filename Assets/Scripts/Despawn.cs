@@ -7,27 +7,22 @@ using UnityEngine;
 public class Despawn : MonoBehaviour, IObservable<int>
 {
     public TMP_InputField inputField;
-
-    private string newInput;
-    private string lastInput;
-    private List<IObserver<int>> observers = new List<IObserver<int>>();
+    private List<IObserver<int>> scoreObservers = new List<IObserver<int>>();
 
     public IDisposable Subscribe(IObserver<int> observer)
     {
-        if (!observers.Contains(observer))
+        if (!scoreObservers.Contains(observer))
         {
-            observers.Add(observer);
+            scoreObservers.Add(observer);
         }
 
         return null;
     }
 
-
     // Start is called before the first frame update
     void Start()
     {
         inputField.Select();
-        lastInput = "";
     }
 
     // Update is called once per frame
@@ -36,46 +31,38 @@ public class Despawn : MonoBehaviour, IObservable<int>
 
     }
 
+    // invoked on each input change on inputField
+    public void TextInputChange()
+    {
+        List<Enemy> enemies = FindObjectsOfType<Enemy>().ToList();
+        string inputFieldText = inputField.text;
+
+        foreach (Enemy enemy in enemies)
+        {
+            string text = enemy.GetComponentInChildren<TextMeshPro>().text.Trim();
+
+            if (inputFieldText != text)
+            {
+                continue;
+            }
+
+            Destroy(enemy.gameObject);
+            ReturnScoreToObservers(enemy.scoreOnKill);
+            ClearInputField();
+            return;
+        }
+    }
+
     private void ReturnScoreToObservers(int score)
     {
-        foreach (var observer in observers)
+        foreach (var observer in scoreObservers)
         {
             observer.OnNext(score);
         }
     }
 
-    public void TextInputChange()
+    private void ClearInputField()
     {
-        List<Enemy> enemies = FindObjectsOfType<Enemy>().ToList();
-        newInput = inputField.text;
-
-        if (newInput.Length >= lastInput.Length)
-        {
-            foreach (Enemy enemy in enemies)
-            {
-                string text = enemy.GetComponentInChildren<TextMeshPro>().text.Trim();
-
-                if (newInput.Equals(text))
-                {
-                    Destroy(enemy.gameObject);
-                    ReturnScoreToObservers(enemy.scoreOnKill);
-                    Clear();
-                    return;
-                }
-            }
-        }
-        else
-        {
-            ReturnScoreToObservers(-1);
-        }
-
-        lastInput = newInput;
-    }
-
-    private void Clear()
-    {
-        newInput = "";
-        lastInput = "";
         inputField.text = "";
         inputField.Select();
     }
