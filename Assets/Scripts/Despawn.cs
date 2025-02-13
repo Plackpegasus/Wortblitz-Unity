@@ -34,7 +34,7 @@ public class Despawn : MonoBehaviour, IObservable<int>
     // invoked on each input change on inputField
     public void TextInputChange()
     {
-        List<Enemy> enemies = FindObjectsOfType<Enemy>().ToList();
+        List<Enemy> enemies = FindObjectsByType<Enemy>(0).ToList();
         string inputFieldText = inputField.text;
 
         foreach (Enemy enemy in enemies)
