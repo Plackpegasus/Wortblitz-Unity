@@ -7,6 +7,7 @@ using UnityEngine;
 public class Despawn : MonoBehaviour, IObservable<int>
 {
     public TMP_InputField inputField;
+    public GameObject explosionPrefab;
     private List<IObserver<int>> scoreObservers = new List<IObserver<int>>();
 
     public IDisposable Subscribe(IObserver<int> observer)
@@ -39,6 +40,9 @@ public class Despawn : MonoBehaviour, IObservable<int>
             {
                 continue;
             }
+
+            var explosion = Instantiate(explosionPrefab);
+            explosion.transform.position = enemy.transform.position;
 
             Destroy(enemy.gameObject);
             ReturnScoreToObservers(enemy.scoreOnKill);

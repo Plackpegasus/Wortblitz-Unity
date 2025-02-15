@@ -1077,6 +1077,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputField: {fileID: 175004045}
+  explosionPrefab: {fileID: 1637037143643166017, guid: 01ba99f0018fff24480e244074a632f1,
+    type: 3}
 --- !u!114 &1330226828
 MonoBehaviour:
   m_ObjectHideFlags: 0
