@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Spawn : MonoBehaviour
 {
-    [Header("Spawn in s")]
+    [Header("Spawnrate in s")]
     public Vector2 spawnRateMinMax;
 
     [Header("Enemy difficulty")]

@@ -22,20 +22,14 @@ public class Despawn : MonoBehaviour, IObservable<int>
     // Start is called before the first frame update
     void Start()
     {
+        inputField.onValueChanged.AddListener(TextInputChange);
         inputField.Select();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     // invoked on each input change on inputField
-    public void TextInputChange()
+    public void TextInputChange(string inputFieldText)
     {
         List<Enemy> enemies = FindObjectsByType<Enemy>(0).ToList();
-        string inputFieldText = inputField.text;
 
         foreach (Enemy enemy in enemies)
         {
@@ -65,5 +59,10 @@ public class Despawn : MonoBehaviour, IObservable<int>
     {
         inputField.text = "";
         inputField.Select();
+    }
+
+    private void OnDestroy()
+    {
+        inputField.onValueChanged.RemoveAllListeners();
     }
 }

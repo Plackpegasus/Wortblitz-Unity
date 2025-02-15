@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 
 public class Enemy : MonoBehaviour
 {
-    public string text;
+    public string text { get; set; }
     public int scoreOnKill = 20;
     public Vector2 dropSpeedMinMax;
 
