@@ -73,5 +73,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
-# Visual Studio config
+# Visual Studio (Code) config
 .vsconfig
+.vscode
